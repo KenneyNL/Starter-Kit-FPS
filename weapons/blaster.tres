@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=4 format=3 uid="uid://c56y8pqoyk15f"]
+
+[ext_resource type="Texture2D" uid="uid://2jld33y6h5pq" path="res://sprites/crosshair.png" id="1_2onsr"]
+[ext_resource type="PackedScene" uid="uid://b2p7bbkuxf7m" path="res://models/blaster.glb" id="1_x0glg"]
+[ext_resource type="Script" path="res://scripts/weapon.gd" id="2_107w7"]
+
+[resource]
+script = ExtResource("2_107w7")
+model = ExtResource("1_x0glg")
+position = Vector3(0, 0, 0)
+rotation = Vector3(0, 180, 0)
+cooldown = 0.5
+max_distance = 10
+damage = 25.0
+spread = 2.0
+shot_count = 3
+sound_shoot = "sounds/shoot_shotgun.ogg"
+crosshair = ExtResource("1_2onsr")
