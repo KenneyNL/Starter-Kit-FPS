@@ -3,10 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://lde2xq3vq635" path="res://models/enemy-flying.glb" id="1_3v8nl"]
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_jg24b"]
 [ext_resource type="SpriteFrames" uid="uid://dbv3sy5qjatnl" path="res://sprites/burst_animation.tres" id="3_iblw5"]
-[ext_resource type="Texture2D" uid="uid://diluv5007my5w" path="res://sprites/tracer.png" id="4_pknwg"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iix87"]
 radius = 0.75
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kvqwh"]
 
 [node name="enemy-flying" type="Area3D"]
 script = ExtResource("1_jg24b")
@@ -37,11 +38,11 @@ autostart = true
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.5, 4.37114e-08, 0, -2.18557e-08, -1, 1, -2.18557e-08, 1.91069e-15, -0.458562, 0.296903, 2.63393)
 visible = false
-texture = ExtResource("4_pknwg")
+texture = SubResource("CompressedTexture2D_kvqwh")
 
 [node name="Sprite3D2" type="Sprite3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.5, 4.37114e-08, 0, -2.18557e-08, -1, 1, -2.18557e-08, 1.91069e-15, 0.452015, 0.296903, 2.63393)
 visible = false
-texture = ExtResource("4_pknwg")
+texture = SubResource("CompressedTexture2D_kvqwh")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

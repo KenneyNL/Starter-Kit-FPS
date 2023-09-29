@@ -24,13 +24,9 @@ func _ready():
 func _on_stream_finished(stream):
 	available.append(stream)
 
-func play(sound_path): # Path
-	queue.append("res://" + sound_path)
-	
-func play_random(sound_paths): # Multiple paths, separate by commas
-	var sounds = sound_paths.split(",")
-	
-	play(sounds[randi() % sounds.size()].strip_edges())
+func play(sound_path): # Path (or multiple, separated by commas)
+	var sounds = sound_path.split(",")
+	queue.append("res://" + sounds[randi() % sounds.size()].strip_edges())
 
 func _process(_delta):
 

@@ -56,7 +56,7 @@ layers = 2
 sprite_frames = ExtResource("4_m6ukc")
 frame = 2
 
-[node name="ShootCast" type="RayCast3D" parent="Head/Camera"]
+[node name="RayCast" type="RayCast3D" parent="Head/Camera"]
 exclude_parent = false
 target_position = Vector3(0, 0, -10)
 collide_with_areas = true
@@ -73,5 +73,5 @@ stream = ExtResource("5_ics1s")
 volume_db = -5.0
 autoplay = true
 
-[node name="BlasterCooldown" type="Timer" parent="."]
+[node name="Cooldown" type="Timer" parent="."]
 one_shot = true
