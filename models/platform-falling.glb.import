@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://c0fgu1f2whait"
-path="res://.godot/imported/blaster-double.glb-432c9163e28f0aae29c58d0e5ca6594b.scn"
+uid="uid://3403atnv0s14"
+path="res://.godot/imported/platform-falling.glb-a1321a8710589d27b2a6e247cfe23359.scn"
 
 [deps]
 
-source_file="res://models/blaster-double.glb"
-dest_files=["res://.godot/imported/blaster-double.glb-432c9163e28f0aae29c58d0e5ca6594b.scn"]
+source_file="res://models/platform-falling.glb"
+dest_files=["res://.godot/imported/platform-falling.glb-a1321a8710589d27b2a6e247cfe23359.scn"]
 
 [params]
 

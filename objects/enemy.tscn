@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://d2g78tpqbyf5g"]
 
 [ext_resource type="PackedScene" uid="uid://lde2xq3vq635" path="res://models/enemy-flying.glb" id="1_3v8nl"]
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_jg24b"]
+[ext_resource type="Script" path="res://objects/enemy.gd" id="1_jg24b"]
 [ext_resource type="SpriteFrames" uid="uid://dbv3sy5qjatnl" path="res://sprites/burst_animation.tres" id="3_iblw5"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iix87"]

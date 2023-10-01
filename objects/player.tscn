@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dl2ed4gkybggf"]
 
-[ext_resource type="Script" path="res://actors/player.gd" id="1_ffboj"]
+[ext_resource type="Script" path="res://objects/player.gd" id="1_ffboj"]
 [ext_resource type="Resource" uid="uid://cu2gtxlcmbb34" path="res://weapons/blaster-repeater.tres" id="2_6epbw"]
 [ext_resource type="Texture2D" uid="uid://8ggihh27mlrr" path="res://sprites/blob_shadow.png" id="2_b0fo8"]
 [ext_resource type="Resource" uid="uid://c56y8pqoyk15f" path="res://weapons/blaster.tres" id="3_kr4p8"]

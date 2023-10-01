@@ -73,9 +73,6 @@ func _process(delta):
 	camera.rotation.x = lerp_angle(camera.rotation.x, rotation_target.x, delta * 25)
 	rotation.y = lerp_angle(rotation.y, rotation_target.y, delta * 25)
 	
-	container.rotation.y = lerp_angle(container.rotation.y, -input_mouse.x * 4, delta * 5)
-	#container.rotation.x = lerp_angle(v.rotation.x, -rotation_target.x / 3, delta * 10)
-	
 	container.position = lerp(container.position, container_offset - (applied_velocity / 30), delta * 10)
 	
 	# Movement sound
@@ -122,6 +119,8 @@ func handle_controls(delta):
 	if Input.is_action_just_pressed("mouse_capture_exit"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		mouse_captured = false
+		
+		input_mouse = Vector2.ZERO
 	
 	# Movement
 	
@@ -140,7 +139,7 @@ func handle_controls(delta):
 	rotation_target -= input.limit_length(1.0) * 5 * delta
 	rotation_target.x = clamp(rotation_target.x, deg_to_rad(-90), deg_to_rad(90))
 	
-	input_mouse = Vector2.ZERO
+	#input_mouse = Vector2.ZERO
 	
 	# Shooting
 	
@@ -228,9 +227,7 @@ func action_shoot():
 			get_tree().root.add_child(impact_instance)
 			
 			impact_instance.position = raycast.get_collision_point() + (raycast.get_collision_normal() / 10)
-			impact_instance.look_at(position, Vector3.UP, true)
-			#impact_instance.rotation_degrees.z = randf_range(-45, 45)
-	# Weapons
+			impact_instance.look_at(camera.global_transform.origin, Vector3.UP, true) 
 
 # Toggle between available weapons (listed in 'weapons')
 

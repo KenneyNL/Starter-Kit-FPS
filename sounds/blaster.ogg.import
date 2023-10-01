@@ -2,7 +2,7 @@
 
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
-uid="uid://dv8rfe827xc6j"
+uid="uid://w3hirmwndftn"
 path="res://.godot/imported/blaster.ogg-1527ec84d518b60bb9fbaad97656d870.oggvorbisstr"
 
 [deps]
@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/blaster.ogg-1527ec84d518b60bb9fbaad97656d870.
 [params]
 
 loop=false
-loop_offset=0
-bpm=0
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4
