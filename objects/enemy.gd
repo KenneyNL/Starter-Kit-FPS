@@ -56,3 +56,5 @@ func shoot():
 			burst_b.rotation_degrees.z = randf_range(-45, 45)
 			
 			Audio.play("sounds/enemy_attack.ogg")
+			
+			collider.get_hurt()

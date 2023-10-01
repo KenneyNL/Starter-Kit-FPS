@@ -133,10 +133,10 @@ func handle_controls(delta):
 	
 	var rotation_input := Vector3.ZERO
 	
-	input.y = Input.get_axis("camera_left", "camera_right")
-	input.x = Input.get_axis("camera_up", "camera_down") / 2
+	rotation_input.y = Input.get_axis("camera_left", "camera_right")
+	rotation_input.x = Input.get_axis("camera_up", "camera_down") / 2
 	
-	rotation_target -= input.limit_length(1.0) * 5 * delta
+	rotation_target -= rotation_input.limit_length(1.0) * 5 * delta
 	rotation_target.x = clamp(rotation_target.x, deg_to_rad(-90), deg_to_rad(90))
 	
 	#input_mouse = Vector2.ZERO
@@ -195,12 +195,15 @@ func action_shoot():
 		container.position.z += 0.25
 		
 		burst.play("default")
+		
 		burst.rotation_degrees.z = randf_range(-45, 45)
 		burst.scale = Vector3.ONE * randf_range(0.40, 0.75)
-		
 		burst.position = container.position - Vector3(0.1, -0.4, 1.5)
 		
+		camera.rotation.x += 0.025
 		blaster_cooldown.start(weapon.cooldown)
+		
+		movement_velocity += Vector3(0, 0, weapon.knockback)
 		
 		# What or where the blaster hit
 		
