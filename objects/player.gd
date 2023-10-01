@@ -19,6 +19,7 @@ var rotation_target: Vector3
 var input: Vector3
 var input_mouse: Vector2
 
+var health:int = 100
 var gravity := 0.0
 
 var previously_floored := false
@@ -30,12 +31,14 @@ var container_offset = Vector3(1.2, -1.1, -2.75)
 
 var tween:Tween
 
-@onready var container = $Head/Camera/SubViewportContainer/SubViewport/CameraItem/Container
+signal health_updated
+
 @onready var camera = $Head/Camera
 @onready var raycast = $Head/Camera/RayCast
-@onready var blaster_cooldown = $Cooldown
-@onready var burst = $Head/Camera/SubViewportContainer/SubViewport/CameraItem/Burst
+@onready var muzzle = $Head/Camera/SubViewportContainer/SubViewport/CameraItem/Muzzle
+@onready var container = $Head/Camera/SubViewportContainer/SubViewport/CameraItem/Container
 @onready var sound_footsteps = $SoundFootsteps
+@onready var blaster_cooldown = $Cooldown
 
 @export var crosshair:TextureRect
 
@@ -139,8 +142,6 @@ func handle_controls(delta):
 	rotation_target -= rotation_input.limit_length(1.0) * 5 * delta
 	rotation_target.x = clamp(rotation_target.x, deg_to_rad(-90), deg_to_rad(90))
 	
-	#input_mouse = Vector2.ZERO
-	
 	# Shooting
 	
 	action_shoot()
@@ -189,23 +190,25 @@ func action_shoot():
 	
 	if Input.is_action_pressed("shoot"):
 	
-		if !blaster_cooldown.is_stopped(): return
+		if !blaster_cooldown.is_stopped(): return # Cooldown for shooting
 		
 		Audio.play(weapon.sound_shoot)
-		container.position.z += 0.25
 		
-		burst.play("default")
+		container.position.z += 0.25 # Knockback of weapon visual
+		camera.rotation.x += 0.025 # Knockback of camera
+		movement_velocity += Vector3(0, 0, weapon.knockback) # Knockback
 		
-		burst.rotation_degrees.z = randf_range(-45, 45)
-		burst.scale = Vector3.ONE * randf_range(0.40, 0.75)
-		burst.position = container.position - Vector3(0.1, -0.4, 1.5)
+		# Set muzzle flash position, play animation
 		
-		camera.rotation.x += 0.025
+		muzzle.play("default")
+		
+		muzzle.rotation_degrees.z = randf_range(-45, 45)
+		muzzle.scale = Vector3.ONE * randf_range(0.40, 0.75)
+		muzzle.position = container.position - weapon.muzzle_position
+		
 		blaster_cooldown.start(weapon.cooldown)
 		
-		movement_velocity += Vector3(0, 0, weapon.knockback)
-		
-		# What or where the blaster hit
+		# Shoot the weapon, amount based on shot count
 		
 		for n in weapon.shot_count:
 		
@@ -214,13 +217,16 @@ func action_shoot():
 			
 			raycast.force_raycast_update()
 			
-			if !raycast.is_colliding():
-				return
-				
+			if !raycast.is_colliding(): return # Don't create impact when raycast didn't hit
+			
 			var collider = raycast.get_collider()
+			
+			# Hitting an enemy
 			
 			if collider.has_method("damage"):
 				collider.damage(weapon.damage)
+			
+			# Creating an impact animation
 			
 			var impact = preload("res://objects/impact.tscn")
 			var impact_instance = impact.instantiate()
@@ -283,5 +289,10 @@ func change_weapon():
 	raycast.target_position = Vector3(0, 0, -1) * weapon.max_distance
 	crosshair.texture = weapon.crosshair
 
-func get_hurt():
-	pass
+func damage(amount):
+	
+	health -= amount
+	health_updated.emit(health) # Update health on HUD
+	
+	if health < 0:
+		get_tree().reload_current_scene() # Reset when out of health

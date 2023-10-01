@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2g78tpqbyf5g"]
+[gd_scene load_steps=5 format=3 uid="uid://d2g78tpqbyf5g"]
 
 [ext_resource type="PackedScene" uid="uid://lde2xq3vq635" path="res://models/enemy-flying.glb" id="1_3v8nl"]
 [ext_resource type="Script" path="res://objects/enemy.gd" id="1_jg24b"]
@@ -6,8 +6,6 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iix87"]
 radius = 0.75
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kvqwh"]
 
 [node name="enemy-flying" type="Area3D"]
 script = ExtResource("1_jg24b")
@@ -21,12 +19,12 @@ shape = SubResource("SphereShape3D_iix87")
 [node name="RayCast" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, 5)
 
-[node name="BurstA" type="AnimatedSprite3D" parent="."]
+[node name="MuzzleA" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.45, 0.3, 0.4)
 sprite_frames = ExtResource("3_iblw5")
 frame = 2
 
-[node name="BurstB" type="AnimatedSprite3D" parent="."]
+[node name="MuzzleB" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.45, 0.3, 0.4)
 sprite_frames = ExtResource("3_iblw5")
 frame = 2
@@ -34,15 +32,5 @@ frame = 2
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.25
 autostart = true
-
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(-4.37114e-08, -0.5, 4.37114e-08, 0, -2.18557e-08, -1, 1, -2.18557e-08, 1.91069e-15, -0.458562, 0.296903, 2.63393)
-visible = false
-texture = SubResource("CompressedTexture2D_kvqwh")
-
-[node name="Sprite3D2" type="Sprite3D" parent="."]
-transform = Transform3D(-4.37114e-08, -0.5, 4.37114e-08, 0, -2.18557e-08, -1, 1, -2.18557e-08, 1.91069e-15, 0.452015, 0.296903, 2.63393)
-visible = false
-texture = SubResource("CompressedTexture2D_kvqwh")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

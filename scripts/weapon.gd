@@ -5,7 +5,7 @@ class_name Weapon
 @export var model:PackedScene # Model of the weapon
 @export var position:Vector3 # On-screen position
 @export var rotation:Vector3 # On-screen rotation
-@export var burst_position:Vector3 # On-screen position of burst
+@export var muzzle_position:Vector3 # On-screen position of muzzle flash
 
 @export_subgroup("Properties")
 @export_range(0.1, 1) var cooldown: float = 0.1 # Firerate
