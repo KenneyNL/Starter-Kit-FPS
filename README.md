@@ -1,13 +1,12 @@
 <p align="center"><img src="icon.png"/></p>
 
-# Starter Kit City Builder
+# Starter Kit FPS
 
-This package includes a basic template for a 3D city builder in Godot 4.1.1.stable.official. Includes features like;
+This package includes a basic template for a first person shooter in Godot 4.1.1.stable.official. Includes features like;
 
-- Building and removing structures
-- Smooth camera controls
-- Dynamic MeshLibrary creation
-- Saving/loading
+- Character controller
+- Weapons, switching weapons
+- Enemies
 - Sprites and 3D Models _(CC0 licensed)_
 
 ### Screenshot
@@ -18,15 +17,10 @@ This package includes a basic template for a 3D city builder in Godot 4.1.1.stab
 
 | Key | Command |
 | --- | --- |
-| <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> | Move camera |
-| <kbd>F</kbd> | Camera to center |
-| <kbd>Middle mouse button</kbd> | Hold to rotate camera |
-| <kbd>Left mouse button</kbd> | Place building |
-| <kbd>DEL</kbd> | Remove building |
-| <kbd>Right mouse button</kbd> | Rotate building |
-| <kbd>Q</kbd> <kbd>E</kbd>  | Toggle between buildings |
-| <kbd>F1</kbd> | Save |
-| <kbd>F2</kbd> | Load |
+| <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> | Movement |
+| <kbd>Spacebar</kbd> | Jump |
+| <kbd>Left mouse button</kbd> | Shoot |
+| <kbd>E</kbd> | Switch weapon |
 
 ### License
 
