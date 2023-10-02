@@ -217,7 +217,7 @@ func action_shoot():
 			
 			raycast.force_raycast_update()
 			
-			if !raycast.is_colliding(): return # Don't create impact when raycast didn't hit
+			if !raycast.is_colliding(): continue # Don't create impact when raycast didn't hit
 			
 			var collider = raycast.get_collider()
 			
