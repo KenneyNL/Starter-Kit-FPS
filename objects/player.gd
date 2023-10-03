@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 @export_subgroup("Properties")
-@export var movement_speed = 250
+@export var movement_speed = 5
 @export var jump_strength = 7
 
 @export_subgroup("Weapons")
@@ -130,7 +130,7 @@ func handle_controls(delta):
 	input.x = Input.get_axis("move_left", "move_right")
 	input.z = Input.get_axis("move_forward", "move_back")
 	
-	movement_velocity = input.normalized() * movement_speed * delta
+	movement_velocity = input.normalized() * movement_speed
 	
 	# Rotation
 	
@@ -139,7 +139,7 @@ func handle_controls(delta):
 	rotation_input.y = Input.get_axis("camera_left", "camera_right")
 	rotation_input.x = Input.get_axis("camera_up", "camera_down") / 2
 	
-	rotation_target -= rotation_input.limit_length(1.0) * 5 * delta
+	rotation_target -= rotation_input.limit_length(1.0) * 5
 	rotation_target.x = clamp(rotation_target.x, deg_to_rad(-90), deg_to_rad(90))
 	
 	# Shooting
