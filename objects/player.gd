@@ -71,7 +71,7 @@ func _physics_process(delta):
 	
 	# Rotation
 	
-	camera.rotation.z = lerp_angle(camera.rotation.z, -input_mouse.x * 1.25, delta * 5)	
+	camera.rotation.z = lerp_angle(camera.rotation.z, -input_mouse.x * 25 * delta, delta * 5)	
 	
 	camera.rotation.x = lerp_angle(camera.rotation.x, rotation_target.x, delta * 25)
 	rotation.y = lerp_angle(rotation.y, rotation_target.y, delta * 25)
