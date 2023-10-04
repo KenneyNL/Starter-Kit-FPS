@@ -50,7 +50,7 @@ func _ready():
 	
 	initiate_change_weapon(weapon_index)
 
-func _process(delta):
+func _physics_process(delta):
 	
 	# Handle functions
 	
@@ -111,7 +111,7 @@ func _input(event):
 		rotation_target.y -= event.relative.x / mouse_sensitivity
 		rotation_target.x -= event.relative.y / mouse_sensitivity
 
-func handle_controls(delta):
+func handle_controls(_delta):
 	
 	# Mouse capture
 	
