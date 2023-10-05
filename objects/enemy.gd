@@ -1,6 +1,7 @@
 extends Node3D
 
 @export var player:Node3D
+@export var explosion:PackedScene = preload("res://objects/explosion.tscn")
 
 @onready var raycast = $RayCast
 @onready var muzzle_a = $MuzzleA
@@ -42,6 +43,9 @@ func damage(amount):
 func destroy():
 	
 	Audio.play("sounds/enemy_destroy.ogg")
+	var effects = explosion.instantiate()
+	effects.transform = transform
+	get_parent().add_child(effects)
 	
 	destroyed = true
 	queue_free()

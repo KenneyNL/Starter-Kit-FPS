@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://b12upspnoxxag"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mj45"]
+transparency = 1
+vertex_color_use_as_albedo = true
+
+[sub_resource type="Gradient" id="Gradient_5nod5"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.3, 0.15, 0.15, 1, 0.6, 0.6, 0.6, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fr1au"]
+gradient = SubResource("Gradient_5nod5")
+
+[sub_resource type="Gradient" id="Gradient_i8smv"]
+offsets = PackedFloat32Array(0, 0.8, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_861rp"]
+gradient = SubResource("Gradient_i8smv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mmndt"]
+lifetime_randomness = 0.25
+emission_shape = 1
+emission_sphere_radius = 0.25
+direction = Vector3(0, 1, 0)
+spread = 35.0
+initial_velocity_min = 1.0
+initial_velocity_max = 4.0
+scale_min = 0.8
+color_ramp = SubResource("GradientTexture1D_861rp")
+color_initial_ramp = SubResource("GradientTexture1D_fr1au")
+
+[sub_resource type="BoxMesh" id="BoxMesh_oe02q"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="explosion" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+material_override = SubResource("StandardMaterial3D_7mj45")
+amount = 64
+lifetime = 0.8
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_mmndt")
+draw_pass_1 = SubResource("BoxMesh_oe02q")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="queue_free"]
