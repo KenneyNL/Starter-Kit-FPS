@@ -76,7 +76,7 @@ func _physics_process(delta):
 	camera.rotation.x = lerp_angle(camera.rotation.x, rotation_target.x, delta * 25)
 	rotation.y = lerp_angle(rotation.y, rotation_target.y, delta * 25)
 	
-	container.position = lerp(container.position, container_offset - (applied_velocity / 30), delta * 10)
+	container.position = lerp(container.position, container_offset - (basis.inverse() * applied_velocity / 30), delta * 10)
 	
 	# Movement sound
 	
