@@ -51,6 +51,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	rotation_delta = Vector2.ZERO
 
+	weapon = weapons[weapon_index]  # weapon must never be nil
 	initiate_change_weapon(weapon_index)
 
 
