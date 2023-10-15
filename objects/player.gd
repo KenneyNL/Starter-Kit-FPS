@@ -18,7 +18,6 @@ var mouse_captured := true
 var movement_velocity: Vector3
 var rotation_delta: Vector2  # x: horizontal, y: vertical
 
-var input: Vector3
 var input_mouse: Vector2
 
 var health: int = 100
@@ -157,10 +156,8 @@ func handle_controls(_delta):
 
 	# Movement
 
-	input.x = Input.get_axis("move_left", "move_right")
-	input.z = Input.get_axis("move_forward", "move_back")
-
-	movement_velocity = input.normalized() * movement_speed
+	var input := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	movement_velocity = Vector3(input.x, 0, input.y).normalized() * movement_speed
 
 	# Rotation
 
