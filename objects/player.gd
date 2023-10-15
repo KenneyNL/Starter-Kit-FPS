@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @export_subgroup("Properties")
 @export var movement_speed = 5
-@export var jump_strength = 7
+@export var jump_strength = 8
 @export var max_look_speed := Vector2.ONE * 5.0  # in radians per second
 
 @export_subgroup("Weapons")
