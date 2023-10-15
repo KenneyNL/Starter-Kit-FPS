@@ -3,6 +3,7 @@ extends CharacterBody3D
 @export_subgroup("Properties")
 @export var movement_speed = 5
 @export var jump_strength = 7
+@export var max_look_speed := Vector2.ONE * 5.0  # in radians per second
 
 @export_subgroup("Weapons")
 @export var weapons: Array[Weapon] = []
@@ -10,11 +11,12 @@ extends CharacterBody3D
 var weapon: Weapon
 var weapon_index := 0
 
-var mouse_sensitivity = 700
+var gamepad_sensitivity := 0.05  # max radians we try to move per physics frame
+var mouse_sensitivity = 700  # 1/max radians we try to move per mouse input
 var mouse_captured := true
 
 var movement_velocity: Vector3
-var rotation_target: Vector3
+var rotation_delta: Vector2  # x: horizontal, y: vertical
 
 var input: Vector3
 var input_mouse: Vector2
@@ -47,10 +49,26 @@ signal health_updated
 func _ready():
 	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
+	rotation_delta = Vector2.ZERO
+
 	initiate_change_weapon(weapon_index)
 
-func _physics_process(delta):
+
+func angle_difference(from: float, to: float) -> float:
+	var diff := fmod(to - from, TAU)
+	return fmod(2.0 * diff, TAU) - diff
+
+
+func rotate_toward(from: float, to: float, delta: float) -> float:
+	# Not yet in gdscript: https://github.com/godotengine/godot/pull/80225
+	var diff := angle_difference(from, to)
+	var diff_abs := absf(diff)
+	# When `delta < 0` move no further than to PI radians away from `p_to` (as
+	# PI is the max possible angle distance).
+	return from + clamp(delta, diff_abs - PI, diff_abs) * signf(diff)
+
+
+func _physics_process(delta: float):
 	
 	# Handle functions
 	
@@ -70,12 +88,19 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	# Rotation
-	
-	camera.rotation.z = lerp_angle(camera.rotation.z, -input_mouse.x * 25 * delta, delta * 5)	
-	
-	camera.rotation.x = lerp_angle(camera.rotation.x, rotation_target.x, delta * 25)
-	rotation.y = lerp_angle(rotation.y, rotation_target.y, delta * 25)
-	
+
+	# Roll a bit when turning horizontally.
+	camera.rotation.z = lerp_angle(camera.rotation.z, -input_mouse.x * 25 * delta, delta * 5)
+
+	var look_amount := max_look_speed * delta
+	# pitch
+	var pitch := rotate_toward(camera.rotation.x, camera.rotation.x + rotation_delta.y, look_amount.x)
+	pitch = clamp(pitch, -TAU * 0.23, TAU * 0.23)
+	camera.rotation.x = pitch
+	# yaw
+	rotation.y        = rotate_toward(rotation.y, rotation.y + rotation_delta.x, look_amount.y)
+	rotation_delta = Vector2.ZERO
+
 	container.position = lerp(container.position, container_offset - (applied_velocity / 30), delta * 10)
 	
 	# Movement sound
@@ -108,8 +133,8 @@ func _input(event):
 		
 		input_mouse = event.relative / mouse_sensitivity
 		
-		rotation_target.y -= event.relative.x / mouse_sensitivity
-		rotation_target.x -= event.relative.y / mouse_sensitivity
+		rotation_delta.x -= event.relative.x / mouse_sensitivity
+		rotation_delta.y -= event.relative.y / mouse_sensitivity
 
 func handle_controls(_delta):
 	
@@ -133,15 +158,10 @@ func handle_controls(_delta):
 	movement_velocity = input.normalized() * movement_speed
 	
 	# Rotation
-	
-	var rotation_input := Vector3.ZERO
-	
-	rotation_input.y = Input.get_axis("camera_left", "camera_right")
-	rotation_input.x = Input.get_axis("camera_up", "camera_down") / 2
-	
-	rotation_target -= rotation_input.limit_length(1.0) * 5
-	rotation_target.x = clamp(rotation_target.x, deg_to_rad(-90), deg_to_rad(90))
-	
+
+	var rotation_input := Input.get_vector("camera_right", "camera_left", "camera_down", "camera_up")
+	rotation_delta += rotation_input * gamepad_sensitivity
+
 	# Shooting
 	
 	action_shoot()
