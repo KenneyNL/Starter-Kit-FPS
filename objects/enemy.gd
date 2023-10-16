@@ -13,7 +13,6 @@ var destroyed := false
 
 # When ready, save the initial position
 
-
 func _ready():
 	target_position = position
 
@@ -26,9 +25,7 @@ func _process(delta):
 
 	position = target_position
 
-
 # Take damage from player
-
 
 func damage(amount):
 	Audio.play("sounds/enemy_hurt.ogg")
@@ -38,9 +35,7 @@ func damage(amount):
 	if health <= 0 and !destroyed:
 		destroy()
 
-
 # Destroy the enemy when out of health
-
 
 func destroy():
 	Audio.play("sounds/enemy_destroy.ogg")
@@ -48,9 +43,7 @@ func destroy():
 	destroyed = true
 	queue_free()
 
-
 # Shoot when timer hits 0
-
 
 func _on_timer_timeout():
 	raycast.force_raycast_update()
@@ -59,6 +52,7 @@ func _on_timer_timeout():
 		var collider = raycast.get_collider()
 
 		if collider.has_method("damage"):  # Raycast collides with player
+			
 			# Play muzzle flash animation(s)
 
 			muzzle_a.frame = 0
