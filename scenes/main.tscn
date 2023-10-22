@@ -1,20 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://dxvvlck8lej3f"]
+[gd_scene load_steps=10 format=3 uid="uid://dxvvlck8lej3f"]
 
 [ext_resource type="Environment" uid="uid://jvmpkdwaeaq" path="res://scenes/main-environment.tres" id="1_q8fpv"]
 [ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player.tscn" id="2_elriq"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="3_s8mkj"]
-[ext_resource type="FontFile" uid="uid://biqtga8moh7ah" path="res://fonts/lilita_one_regular.ttf" id="3_w27de"]
+[ext_resource type="LabelSettings" uid="uid://bumd8ymuwhs5p" path="res://scenes/label.tres" id="4_4rn26"]
 [ext_resource type="PackedScene" uid="uid://dpm3l05d7fu35" path="res://objects/platform.tscn" id="5_3s40e"]
 [ext_resource type="PackedScene" uid="uid://r7rt7pth4u7o" path="res://objects/wall_low.tscn" id="5_6vel1"]
 [ext_resource type="PackedScene" uid="uid://c71evdjblk5wp" path="res://objects/wall_high.tscn" id="7_cabne"]
 [ext_resource type="PackedScene" uid="uid://bvx5cvigosg0s" path="res://objects/platform_large_grass.tscn" id="7_wggef"]
 [ext_resource type="PackedScene" uid="uid://d2g78tpqbyf5g" path="res://objects/enemy.tscn" id="8_7ty2f"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_fpmwk"]
-font = ExtResource("3_w27de")
-font_size = 36
-outline_size = 12
-outline_color = Color(0, 0, 0, 0.470588)
 
 [node name="Main" type="Node3D"]
 
@@ -55,7 +49,19 @@ offset_bottom = 672.0
 size_flags_horizontal = 0
 size_flags_vertical = 8
 text = "100%"
-label_settings = SubResource("LabelSettings_fpmwk")
+label_settings = ExtResource("4_4rn26")
+vertical_alignment = 2
+
+[node name="Ammo" type="Label" parent="HUD"]
+offset_left = 1100.0
+offset_top = 627.0
+offset_right = 1190.0
+offset_bottom = 672.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "asdf"
+label_settings = ExtResource("4_4rn26")
+horizontal_alignment = 2
 vertical_alignment = 2
 
 [node name="Enemies" type="Node" parent="."]
@@ -119,4 +125,5 @@ transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 
 
 [node name="Decoration" type="Node" parent="."]
 
+[connection signal="ammo_updated" from="Player" to="HUD" method="_on_player_ammo_updated"]
 [connection signal="health_updated" from="Player" to="HUD" method="_on_health_updated"]

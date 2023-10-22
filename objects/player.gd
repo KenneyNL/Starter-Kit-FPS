@@ -33,6 +33,7 @@ var container_offset = Vector3(1.2, -1.1, -2.75)
 var tween:Tween
 
 signal health_updated
+signal ammo_updated
 
 @onready var camera = $Head/Camera
 @onready var raycast = $Head/Camera/RayCast
@@ -101,7 +102,7 @@ func _physics_process(delta):
 	# Falling/respawning
 	
 	if position.y < -10:
-		get_tree().reload_current_scene()
+		_reload_current_scene()
 
 # Mouse movement
 
@@ -139,6 +140,10 @@ func handle_controls(_delta):
 	
 	rotation_target -= Vector3(-rotation_input.y, -rotation_input.x, 0).limit_length(1.0) * gamepad_sensitivity
 	rotation_target.x = clamp(rotation_target.x, deg_to_rad(-90), deg_to_rad(90))
+	
+	# Reload
+	
+	action_reload()
 	
 	# Shooting
 	
@@ -182,13 +187,28 @@ func action_jump():
 	jump_single = false;
 	jump_double = true;
 
+# Reloading
+
+func action_reload():
+	if Input.is_action_pressed("reload"):
+		weapon.reload()
+		ammo_updated.emit(weapon.magazine_size, weapon.ammo)
+
 # Shooting
 
 func action_shoot():
 	
 	if Input.is_action_pressed("shoot"):
 	
-		if !blaster_cooldown.is_stopped(): return # Cooldown for shooting
+		if !blaster_cooldown.is_stopped():
+			return # Cooldown for shooting
+		
+		if weapon.magazine_size - weapon.shot_count < 0:
+			# no bullets left to shoot
+			return
+		
+		weapon.magazine_size = weapon.magazine_size - weapon.shot_count
+		ammo_updated.emit(weapon.magazine_size, weapon.ammo)
 		
 		Audio.play(weapon.sound_shoot)
 		
@@ -286,6 +306,7 @@ func change_weapon():
 	
 	raycast.target_position = Vector3(0, 0, -1) * weapon.max_distance
 	crosshair.texture = weapon.crosshair
+	ammo_updated.emit(weapon.magazine_size, weapon.ammo)
 
 func damage(amount):
 	
@@ -293,4 +314,11 @@ func damage(amount):
 	health_updated.emit(health) # Update health on HUD
 	
 	if health < 0:
-		get_tree().reload_current_scene() # Reset when out of health
+		_reload_current_scene() # Reset when out of health
+
+# Reload game
+func _reload_current_scene():
+	for weapon in weapons:
+		weapon.reset()
+	
+	get_tree().reload_current_scene()

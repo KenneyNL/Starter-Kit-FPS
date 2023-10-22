@@ -21,6 +21,7 @@ This package includes a basic template for a first person shooter in Godot 4.1.1
 | <kbd>Spacebar</kbd> | Jump |
 | <kbd>Left mouse button</kbd> | Shoot |
 | <kbd>E</kbd> | Switch weapon |
+| <kbd>R</kbd> | Reload weapon |
 
 ### License
 
