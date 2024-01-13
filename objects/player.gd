@@ -72,7 +72,6 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	# Rotation 
-	#camera.rotation.z = lerp_angle(camera.rotation.z, -input_mouse.x * 25 * delta, delta * 5)
 	container.position = lerp(container.position, container_offset - (basis.inverse() * applied_velocity / 30), delta * 10)
 	
 	# Movement sound
