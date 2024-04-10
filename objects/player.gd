@@ -192,10 +192,6 @@ func action_shoot():
 		
 		Audio.play(weapon.sound_shoot)
 		
-		container.position.z += 0.25 # Knockback of weapon visual
-		camera.rotation.x += 0.025 # Knockback of camera
-		movement_velocity += Vector3(0, 0, weapon.knockback) # Knockback
-		
 		# Set muzzle flash position, play animation
 		
 		muzzle.play("default")
@@ -234,7 +230,11 @@ func action_shoot():
 			get_tree().root.add_child(impact_instance)
 			
 			impact_instance.position = raycast.get_collision_point() + (raycast.get_collision_normal() / 10)
-			impact_instance.look_at(camera.global_transform.origin, Vector3.UP, true) 
+			impact_instance.look_at(camera.global_transform.origin, Vector3.UP, true)
+			
+		container.position.z += 0.25 # Knockback of weapon visual
+		camera.rotation.x += 0.025 # Knockback of camera
+		movement_velocity += Vector3(0, 0, weapon.knockback) # Knockback
 
 # Toggle between available weapons (listed in 'weapons')
 
