@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dxvvlck8lej3f"]
+[gd_scene load_steps=12 format=3 uid="uid://dxvvlck8lej3f"]
 
 [ext_resource type="Environment" uid="uid://jvmpkdwaeaq" path="res://scenes/main-environment.tres" id="1_q8fpv"]
 [ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player.tscn" id="2_elriq"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c71evdjblk5wp" path="res://objects/wall_high.tscn" id="7_cabne"]
 [ext_resource type="PackedScene" uid="uid://bvx5cvigosg0s" path="res://objects/platform_large_grass.tscn" id="7_wggef"]
 [ext_resource type="PackedScene" uid="uid://d2g78tpqbyf5g" path="res://objects/enemy.tscn" id="8_7ty2f"]
+[ext_resource type="PackedScene" uid="uid://oqfhfp1a80qd" path="res://objects/cloud.tscn" id="10_5ksau"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fpmwk"]
 font = ExtResource("3_w27de")
@@ -118,5 +119,38 @@ transform = Transform3D(0.866026, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866026, 12, 2.5, -
 transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 5, 0.5, 5.5)
 
 [node name="Decoration" type="Node" parent="."]
+
+[node name="cube2" parent="Decoration" instance=ExtResource("10_5ksau")]
+transform = Transform3D(1.49603, 0.232188, 3.70243, 1.85892, 3.40786, -0.964843, -3.21035, 2.08149, 1.16666, -9.48509, 8.49799, 20.5554)
+
+[node name="cube9" parent="Decoration" instance=ExtResource("10_5ksau")]
+transform = Transform3D(1.49603, 1.85892, -3.21035, 0.232188, 3.40786, 2.08149, 3.70243, -0.964843, 1.16666, 25.5597, 6.35221, -12.1167)
+
+[node name="cube5" parent="Decoration" instance=ExtResource("10_5ksau")]
+transform = Transform3D(3.0771, 1.12972, -2.29242, -0.0239142, 3.60054, 1.74228, 2.55556, -1.32658, 2.77656, 6.4111, 6.35221, -28.6551)
+
+[node name="cube3" parent="Decoration" instance=ExtResource("10_5ksau")]
+transform = Transform3D(2.12132, 0, 2.12132, 0, 3, 0, -2.12132, 0, 2.12132, -2.75413, 2.42683, 25.3984)
+
+[node name="cube10" parent="Decoration" instance=ExtResource("10_5ksau")]
+transform = Transform3D(0.776457, -2.89778, 2.66454e-15, 1.44889, 0.388229, -2.59808, 2.50955, 0.672432, 1.5, 27.5131, 12.0265, -5.37209)
+
+[node name="cube11" parent="Decoration" instance=ExtResource("10_5ksau")]
+transform = Transform3D(0.672432, 2.89778, -0.388229, -2.50955, 0.776457, 1.44889, 1.5, 0, 2.59808, -28.6125, 16.2998, -4.89238)
+
+[node name="cube12" parent="Decoration" instance=ExtResource("10_5ksau")]
+transform = Transform3D(0.672432, 2.89778, -0.388229, -2.50955, 0.776457, 1.44889, 1.5, 0, 2.59808, -25.14, 8.80719, -24.2564)
+
+[node name="cube6" parent="Decoration" instance=ExtResource("10_5ksau")]
+transform = Transform3D(-1.73205, 0.965926, 0.258819, -1, -1.67303, -0.448288, 0, -0.517638, 1.93185, 14.1295, 10.1139, 17.5347)
+
+[node name="cube7" parent="Decoration" instance=ExtResource("10_5ksau")]
+transform = Transform3D(1.41421, 0, -1.41421, 1, 1.41421, 1, 1, -1.41421, 1, -5.11081, 2.42683, -36.641)
+
+[node name="cube8" parent="Decoration" instance=ExtResource("10_5ksau")]
+transform = Transform3D(1.73205, 0, 1, 0, 2, 0, -1, 0, 1.73205, -30.1261, 2.42683, -13.7339)
+
+[node name="cube4" parent="Decoration" instance=ExtResource("10_5ksau")]
+transform = Transform3D(1.12202, 1.39419, -2.40776, 1.53922, 1.85165, 1.78946, 2.31773, -1.90463, -0.0227883, -0.881504, 13.0297, -30.1859)
 
 [connection signal="health_updated" from="Player" to="HUD" method="_on_health_updated"]

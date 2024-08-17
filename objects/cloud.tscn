@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://oqfhfp1a80qd"]
+
+[ext_resource type="PackedScene" uid="uid://g2w2608bc2dy" path="res://models/cloud.glb" id="1_2mo3p"]
+[ext_resource type="Script" path="res://objects/cloud.gd" id="2_rmotl"]
+
+[node name="cube2" instance=ExtResource("1_2mo3p")]
+script = ExtResource("2_rmotl")
+
+[node name="cube" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
