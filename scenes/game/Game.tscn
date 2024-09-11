@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ubd1pkp0d6xu"]
+
+[ext_resource type="PackedScene" uid="uid://dvaipac7pysst" path="res://models/House/HomeBase.tscn" id="1_4a24o"]
+[ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player.tscn" id="2_ttn67"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="HomeBase" parent="." instance=ExtResource("1_4a24o")]
+
+[node name="Player" parent="." instance=ExtResource("2_ttn67")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.316262, 2.15417, 13.5416)

@@ -1,0 +1,102 @@
+[gd_scene load_steps=14 format=3 uid="uid://dvaipac7pysst"]
+
+[ext_resource type="Script" path="res://models/House/base.gd" id="1_85hls"]
+[ext_resource type="PackedScene" uid="uid://chrwb6ffm3b0p" path="res://models/House/Base.glb" id="1_yn4kn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y3foq"]
+size = Vector3(6.07212, 5.51514, 5.05435)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6b26g"]
+size = Vector3(2.70358, 2.54956, 0.57019)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mtamr"]
+size = Vector3(5.08542, 0.451294, 3.93835)
+
+[sub_resource type="Curve" id="Curve_56jyr"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.65942, 0.593407), 2.83077, 2.83077, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_3r4j4"]
+curve = SubResource("Curve_56jyr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rpb66"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+gravity = Vector3(0, 9.8, 0)
+scale_curve = SubResource("CurveTexture_3r4j4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6h8e"]
+shading_mode = 0
+albedo_color = Color(0.313726, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_n6llm"]
+material = SubResource("StandardMaterial3D_y6h8e")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ejbvv"]
+transparency = 1
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.313726, 1, 1, 0.176471)
+clearcoat_enabled = true
+clearcoat_roughness = 1.0
+subsurf_scatter_strength = 0.31
+
+[sub_resource type="SphereMesh" id="SphereMesh_6pa7r"]
+material = SubResource("StandardMaterial3D_ejbvv")
+radius = 20.0
+height = 40.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3mabh"]
+radius = 20.0
+
+[node name="HomeBase" type="Node3D" node_paths=PackedStringArray("shield", "shield_generator_particles")]
+script = ExtResource("1_85hls")
+shield = NodePath("Base/Area3D")
+shield_generator_particles = NodePath("Base/GPUParticles3D")
+
+[node name="Base" parent="." instance=ExtResource("1_yn4kn")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="Collider" type="StaticBody3D" parent="Base"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Base/Collider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00117302, 2.62817, 0.0223541)
+shape = SubResource("BoxShape3D_y3foq")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Base/Collider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013504, 1.14119, 2.74713)
+shape = SubResource("BoxShape3D_6b26g")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Base/Collider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.014328, 3.83269, 4.5512)
+shape = SubResource("BoxShape3D_mtamr")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Base/Collider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0136909, 3.83269, -4.51275)
+shape = SubResource("BoxShape3D_mtamr")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Base/Collider"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.02898, 3.83269, 0.0122199)
+shape = SubResource("BoxShape3D_mtamr")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Base/Collider"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5.02962, 3.83269, 0.0262286)
+shape = SubResource("BoxShape3D_mtamr")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+amount = 7
+process_material = SubResource("ParticleProcessMaterial_rpb66")
+draw_pass_1 = SubResource("SphereMesh_n6llm")
+
+[node name="Area3D" type="Area3D" parent="Base" groups=["Shield"]]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Base/Area3D"]
+mesh = SubResource("SphereMesh_6pa7r")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Base/Area3D"]
+shape = SubResource("SphereShape3D_3mabh")
