@@ -9,12 +9,12 @@ var battery: int = 0 #out of 100
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	shield.isVisible = isShieldOn
+	shield.visible = isShieldOn
 	shield_generator_particles.emitting = isShieldOn
 
 func toggle_shield() -> void:
 	isShieldOn = !isShieldOn
-	shield.isVisible = isShieldOn
+	shield.visible = isShieldOn
 	shield_generator_particles.emitting = isShieldOn
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

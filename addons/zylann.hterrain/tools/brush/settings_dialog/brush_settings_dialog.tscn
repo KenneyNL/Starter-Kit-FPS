@@ -1,0 +1,211 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2rt3wj8xkhp2"]
+
+[ext_resource type="PackedScene" path="res://addons/zylann.hterrain/tools/util/spin_slider.tscn" id="2"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/tools/brush/settings_dialog/brush_settings_dialog.gd" id="3"]
+[ext_resource type="PackedScene" uid="uid://ng00jipfeucy" path="res://addons/zylann.hterrain/tools/brush/settings_dialog/preview_scratchpad.tscn" id="4"]
+
+[node name="BrushSettingsDialog" type="AcceptDialog"]
+title = "Brush settings"
+size = Vector2i(700, 422)
+min_size = Vector2i(700, 400)
+script = ExtResource("3")
+
+[node name="VB" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -49.0
+
+[node name="HB" type="HBoxContainer" parent="VB"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VB" type="VBoxContainer" parent="VB/HB"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VB/HB/VB"]
+layout_mode = 2
+text = "Shapes"
+
+[node name="ShapeList" type="ItemList" parent="VB/HB/VB"]
+layout_mode = 2
+size_flags_vertical = 3
+fixed_icon_size = Vector2i(100, 100)
+
+[node name="ChangeShape" type="Button" parent="VB/HB/VB"]
+layout_mode = 2
+disabled = true
+text = "Change..."
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VB/HB/VB"]
+layout_mode = 2
+
+[node name="AddShape" type="Button" parent="VB/HB/VB/HBoxContainer"]
+layout_mode = 2
+text = "Add..."
+
+[node name="RemoveShape" type="Button" parent="VB/HB/VB/HBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Remove"
+
+[node name="VB2" type="VBoxContainer" parent="VB/HB"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VB/HB/VB2"]
+layout_mode = 2
+
+[node name="Settings" type="VBoxContainer" parent="VB/HB/VB2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Size" parent="VB/HB/VB2/Settings" instance=ExtResource("2")]
+custom_minimum_size = Vector2(32, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+value = 32.0
+min_value = 2.0
+max_value = 500.0
+prefix = "Size:"
+suffix = "px"
+rounded = true
+centered = true
+allow_greater = true
+greater_max_value = 4000.0
+
+[node name="Opacity" parent="VB/HB/VB2/Settings" instance=ExtResource("2")]
+custom_minimum_size = Vector2(32, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+max_value = 100.0
+prefix = "Opacity"
+suffix = "%"
+rounded = true
+centered = true
+greater_max_value = 10000.0
+
+[node name="PressureEnabled" type="CheckBox" parent="VB/HB/VB2/Settings"]
+layout_mode = 2
+text = "Enable pressure (pen tablets)"
+
+[node name="PressureOverSize" parent="VB/HB/VB2/Settings" instance=ExtResource("2")]
+custom_minimum_size = Vector2(32, 28)
+layout_mode = 2
+value = 50.0
+max_value = 100.0
+prefix = "Pressure affects size:"
+suffix = "%"
+centered = true
+greater_max_value = 10000.0
+
+[node name="PressureOverOpacity" parent="VB/HB/VB2/Settings" instance=ExtResource("2")]
+custom_minimum_size = Vector2(32, 28)
+layout_mode = 2
+value = 50.0
+max_value = 100.0
+prefix = "Pressure affects opacity:"
+suffix = "%"
+centered = true
+greater_max_value = 10000.0
+
+[node name="FrequencyTime" parent="VB/HB/VB2/Settings" instance=ExtResource("2")]
+custom_minimum_size = Vector2(32, 28)
+layout_mode = 2
+value = 60.0
+min_value = 1.0
+max_value = 60.0
+prefix = "Frequency time:"
+suffix = "fps"
+centered = true
+greater_max_value = 10000.0
+
+[node name="FrequencyDistance" parent="VB/HB/VB2/Settings" instance=ExtResource("2")]
+custom_minimum_size = Vector2(32, 28)
+layout_mode = 2
+max_value = 100.0
+prefix = "Frequency distance:"
+suffix = "px"
+centered = true
+greater_max_value = 4000.0
+
+[node name="RandomRotation" type="CheckBox" parent="VB/HB/VB2/Settings"]
+layout_mode = 2
+text = "Random rotation"
+
+[node name="ShapeCycling" type="CheckBox" parent="VB/HB/VB2/Settings"]
+layout_mode = 2
+text = "Shape cycling"
+
+[node name="HSeparator" type="HSeparator" parent="VB/HB/VB2/Settings"]
+visible = false
+layout_mode = 2
+
+[node name="SizeLimitHB" type="HBoxContainer" parent="VB/HB/VB2/Settings"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VB/HB/VB2/Settings/SizeLimitHB"]
+layout_mode = 2
+mouse_filter = 0
+text = "Size limit:"
+
+[node name="SizeLimit" type="SpinBox" parent="VB/HB/VB2/Settings/SizeLimitHB"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 1000.0
+value = 200.0
+
+[node name="HSeparator2" type="HSeparator" parent="VB/HB/VB2/Settings"]
+visible = false
+layout_mode = 2
+
+[node name="HB" type="HBoxContainer" parent="VB/HB/VB2/Settings"]
+visible = false
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VB/HB/VB2/Settings/HB"]
+layout_mode = 2
+text = "Load preset..."
+
+[node name="Button2" type="Button" parent="VB/HB/VB2/Settings/HB"]
+layout_mode = 2
+text = "Save preset..."
+
+[node name="VB3" type="VBoxContainer" parent="VB/HB"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VB/HB/VB3"]
+layout_mode = 2
+text = "Scratchpad"
+
+[node name="PreviewScratchpad" parent="VB/HB/VB3" instance=ExtResource("4")]
+custom_minimum_size = Vector2(200, 300)
+layout_mode = 2
+
+[node name="ClearScratchpad" type="Button" parent="VB/HB/VB3"]
+layout_mode = 2
+text = "Clear"
+
+[connection signal="empty_clicked" from="VB/HB/VB/ShapeList" to="." method="_on_shape_list_empty_clicked"]
+[connection signal="item_activated" from="VB/HB/VB/ShapeList" to="." method="_on_ShapeList_item_activated"]
+[connection signal="item_selected" from="VB/HB/VB/ShapeList" to="." method="_on_ShapeList_item_selected"]
+[connection signal="pressed" from="VB/HB/VB/ChangeShape" to="." method="_on_ChangeShape_pressed"]
+[connection signal="pressed" from="VB/HB/VB/HBoxContainer/AddShape" to="." method="_on_AddShape_pressed"]
+[connection signal="pressed" from="VB/HB/VB/HBoxContainer/RemoveShape" to="." method="_on_RemoveShape_pressed"]
+[connection signal="value_changed" from="VB/HB/VB2/Settings/Size" to="." method="_on_Size_value_changed"]
+[connection signal="value_changed" from="VB/HB/VB2/Settings/Opacity" to="." method="_on_Opacity_value_changed"]
+[connection signal="toggled" from="VB/HB/VB2/Settings/PressureEnabled" to="." method="_on_PressureEnabled_toggled"]
+[connection signal="value_changed" from="VB/HB/VB2/Settings/PressureOverSize" to="." method="_on_PressureOverSize_value_changed"]
+[connection signal="value_changed" from="VB/HB/VB2/Settings/PressureOverOpacity" to="." method="_on_PressureOverOpacity_value_changed"]
+[connection signal="value_changed" from="VB/HB/VB2/Settings/FrequencyTime" to="." method="_on_FrequencyTime_value_changed"]
+[connection signal="value_changed" from="VB/HB/VB2/Settings/FrequencyDistance" to="." method="_on_FrequencyDistance_value_changed"]
+[connection signal="toggled" from="VB/HB/VB2/Settings/RandomRotation" to="." method="_on_RandomRotation_toggled"]
+[connection signal="toggled" from="VB/HB/VB2/Settings/ShapeCycling" to="." method="_on_shape_cycling_toggled"]
+[connection signal="pressed" from="VB/HB/VB3/ClearScratchpad" to="." method="_on_ClearScratchpad_pressed"]

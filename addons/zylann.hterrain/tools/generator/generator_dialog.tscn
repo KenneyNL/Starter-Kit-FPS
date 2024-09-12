@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=3 uid="uid://cgfo1ocbdi1ug"]
+
+[ext_resource type="Script" path="res://addons/zylann.hterrain/tools/generator/generator_dialog.gd" id="1"]
+[ext_resource type="PackedScene" path="res://addons/zylann.hterrain/tools/inspector/inspector.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://addons/zylann.hterrain/tools/terrain_preview.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://addons/zylann.hterrain/tools/util/dialog_fitter.tscn" id="4"]
+
+[node name="GeneratorDialog" type="AcceptDialog"]
+title = "Generate terrain"
+size = Vector2i(1100, 780)
+min_size = Vector2i(1100, 620)
+script = ExtResource("1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -18.0
+
+[node name="Editor" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Settings" type="VBoxContainer" parent="VBoxContainer/Editor"]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+
+[node name="Inspector" parent="VBoxContainer/Editor/Settings" instance=ExtResource("2")]
+layout_mode = 2
+
+[node name="Preview" type="Control" parent="VBoxContainer/Editor"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TerrainPreview" parent="VBoxContainer/Editor/Preview" instance=ExtResource("3")]
+layout_mode = 1
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Editor/Preview"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 4.0
+offset_right = 207.0
+offset_bottom = 18.0
+text = "LMB: offset, MMB: rotate"
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/Editor/Preview"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -35.0
+step = 1.0
+
+[node name="Choices" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ApplyButton" type="Button" parent="VBoxContainer/Choices"]
+layout_mode = 2
+text = "Apply"
+
+[node name="CancelButton" type="Button" parent="VBoxContainer/Choices"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="DialogFitter" parent="." instance=ExtResource("4")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 1092.0
+offset_bottom = 762.0
+
+[connection signal="property_changed" from="VBoxContainer/Editor/Settings/Inspector" to="." method="_on_Inspector_property_changed"]
+[connection signal="dragged" from="VBoxContainer/Editor/Preview/TerrainPreview" to="." method="_on_TerrainPreview_dragged"]
+[connection signal="pressed" from="VBoxContainer/Choices/ApplyButton" to="." method="_on_ApplyButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Choices/CancelButton" to="." method="_on_CancelButton_pressed"]

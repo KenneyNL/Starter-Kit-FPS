@@ -1,0 +1,194 @@
+[gd_scene load_steps=9 format=3 uid="uid://c0e7ifnoygvr6"]
+
+[ext_resource type="Script" path="res://addons/zylann.hterrain/tools/texture_editor/set_editor/texture_set_editor.gd" id="1"]
+[ext_resource type="Shader" path="res://addons/zylann.hterrain/tools/texture_editor/display_alpha.gdshader" id="2"]
+[ext_resource type="Shader" path="res://addons/zylann.hterrain/tools/texture_editor/display_color.gdshader" id="3"]
+[ext_resource type="PackedScene" path="res://addons/zylann.hterrain/tools/util/dialog_fitter.tscn" id="5"]
+
+[sub_resource type="ShaderMaterial" id="1"]
+shader = ExtResource("3")
+
+[sub_resource type="ShaderMaterial" id="2"]
+shader = ExtResource("2")
+
+[sub_resource type="ShaderMaterial" id="3"]
+shader = ExtResource("3")
+
+[sub_resource type="ShaderMaterial" id="4"]
+shader = ExtResource("2")
+
+[node name="TextureSetEditor" type="AcceptDialog"]
+title = "TextureSet Editor"
+size = Vector2i(666, 341)
+min_size = Vector2i(652, 320)
+script = ExtResource("1")
+
+[node name="VB" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -18.0
+
+[node name="HS" type="HSplitContainer" parent="VB"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VB" type="VBoxContainer" parent="VB/HS"]
+layout_mode = 2
+
+[node name="SlotsList" type="ItemList" parent="VB/HS/VB"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HB" type="HBoxContainer" parent="VB/HS/VB"]
+layout_mode = 2
+
+[node name="AddSlot" type="Button" parent="VB/HS/VB/HB"]
+layout_mode = 2
+text = "+"
+
+[node name="Control" type="Control" parent="VB/HS/VB/HB"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RemoveSlot" type="Button" parent="VB/HS/VB/HB"]
+layout_mode = 2
+text = "-"
+
+[node name="VB2" type="VBoxContainer" parent="VB/HS"]
+layout_mode = 2
+
+[node name="GC" type="GridContainer" parent="VB/HS/VB2"]
+layout_mode = 2
+columns = 4
+
+[node name="AlbedoLabel" type="Label" parent="VB/HS/VB2/GC"]
+layout_mode = 2
+text = "Albedo"
+
+[node name="AlbedoExtraLabel" type="Label" parent="VB/HS/VB2/GC"]
+layout_mode = 2
+text = "+ alpha bump"
+
+[node name="NormalLabel" type="Label" parent="VB/HS/VB2/GC"]
+layout_mode = 2
+text = "Normal"
+
+[node name="NormalExtraLabel" type="Label" parent="VB/HS/VB2/GC"]
+layout_mode = 2
+text = "+ alpha roughness"
+
+[node name="AlbedoPreview" type="TextureRect" parent="VB/HS/VB2/GC"]
+material = SubResource("1")
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 1
+
+[node name="BumpPreview" type="TextureRect" parent="VB/HS/VB2/GC"]
+material = SubResource("2")
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 1
+
+[node name="NormalPreview" type="TextureRect" parent="VB/HS/VB2/GC"]
+material = SubResource("3")
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 1
+
+[node name="RoughnessPreview" type="TextureRect" parent="VB/HS/VB2/GC"]
+material = SubResource("4")
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 1
+
+[node name="LoadAlbedo" type="Button" parent="VB/HS/VB2/GC"]
+layout_mode = 2
+text = "Load..."
+
+[node name="Spacer" type="Control" parent="VB/HS/VB2/GC"]
+layout_mode = 2
+
+[node name="LoadNormal" type="Button" parent="VB/HS/VB2/GC"]
+layout_mode = 2
+text = "Load..."
+
+[node name="Spacer2" type="Control" parent="VB/HS/VB2/GC"]
+layout_mode = 2
+
+[node name="ClearAlbedo" type="Button" parent="VB/HS/VB2/GC"]
+layout_mode = 2
+text = "Clear"
+
+[node name="Spacer3" type="Control" parent="VB/HS/VB2/GC"]
+layout_mode = 2
+
+[node name="ClearNormal" type="Button" parent="VB/HS/VB2/GC"]
+layout_mode = 2
+text = "Clear"
+
+[node name="HSeparator" type="Control" parent="VB/HS/VB2"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="GC2" type="HBoxContainer" parent="VB/HS/VB2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VB/HS/VB2/GC2"]
+layout_mode = 2
+text = "Mode"
+
+[node name="ModeSelector" type="OptionButton" parent="VB/HS/VB2/GC2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Control" parent="VB/HS/VB2/GC2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Control" parent="VB"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="HB" type="HBoxContainer" parent="VB"]
+layout_mode = 2
+alignment = 1
+
+[node name="ImportButton" type="Button" parent="VB/HB"]
+layout_mode = 2
+text = "Import..."
+
+[node name="CloseButton" type="Button" parent="VB/HB"]
+layout_mode = 2
+text = "Close"
+
+[node name="Spacer2" type="Control" parent="VB"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="DialogFitter" parent="." instance=ExtResource("5")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 658.0
+offset_bottom = 323.0
+
+[connection signal="item_selected" from="VB/HS/VB/SlotsList" to="." method="_on_SlotsList_item_selected"]
+[connection signal="pressed" from="VB/HS/VB/HB/AddSlot" to="." method="_on_AddSlot_pressed"]
+[connection signal="pressed" from="VB/HS/VB/HB/RemoveSlot" to="." method="_on_RemoveSlot_pressed"]
+[connection signal="pressed" from="VB/HS/VB2/GC/LoadAlbedo" to="." method="_on_LoadAlbedo_pressed"]
+[connection signal="pressed" from="VB/HS/VB2/GC/LoadNormal" to="." method="_on_LoadNormal_pressed"]
+[connection signal="pressed" from="VB/HS/VB2/GC/ClearAlbedo" to="." method="_on_ClearAlbedo_pressed"]
+[connection signal="pressed" from="VB/HS/VB2/GC/ClearNormal" to="." method="_on_ClearNormal_pressed"]
+[connection signal="item_selected" from="VB/HS/VB2/GC2/ModeSelector" to="." method="_on_ModeSelector_item_selected"]
+[connection signal="pressed" from="VB/HB/ImportButton" to="." method="_on_ImportButton_pressed"]
+[connection signal="pressed" from="VB/HB/CloseButton" to="." method="_on_CloseButton_pressed"]

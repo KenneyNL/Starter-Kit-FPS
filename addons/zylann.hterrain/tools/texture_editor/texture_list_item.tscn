@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://daugk4kdnx6vy"]
+
+[ext_resource type="Script" path="res://addons/zylann.hterrain/tools/texture_editor/texture_list_item.gd" id="2"]
+
+[node name="TextureListItem" type="PanelContainer"]
+custom_minimum_size = Vector2(64, 80)
+offset_right = 64.0
+offset_bottom = 80.0
+focus_mode = 1
+script = ExtResource("2")
+
+[node name="VB" type="VBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="VB"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+expand_mode = 1
+
+[node name="Label" type="Label" parent="VB"]
+layout_mode = 2
+text = "Texture"

@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://bue2flijnxa3p"]
+
+[ext_resource type="Script" path="res://addons/zylann.hterrain/tools/terrain_preview.gd" id="1"]
+
+[sub_resource type="PlaneMesh" id="3"]
+size = Vector2(256, 256)
+
+[node name="TerrainPreview" type="SubViewportContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 0
+stretch = true
+script = ExtResource("1")
+
+[node name="Viewport" type="SubViewport" parent="."]
+own_world_3d = true
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="Viewport"]
+transform = Transform3D(-0.901211, 0.315056, -0.297588, 0, 0.686666, 0.726973, 0.433381, 0.655156, -0.618831, 0, 0, 0)
+light_bake_mode = 1
+shadow_enabled = true
+shadow_bias = 0.5
+directional_shadow_mode = 1
+directional_shadow_max_distance = 1000.0
+
+[node name="MeshInstance" type="MeshInstance3D" parent="Viewport"]
+mesh = SubResource("3")
+
+[node name="Camera" type="Camera3D" parent="Viewport"]
+transform = Transform3D(-1, 3.31486e-08, -8.08945e-08, 0, 0.925325, 0.379176, 8.74228e-08, 0.379176, -0.925325, -2.25312e-05, 145.456, -348.286)
+current = true
+fov = 70.0
+near = 1.0
+far = 1000.0

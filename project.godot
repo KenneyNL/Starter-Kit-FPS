@@ -32,6 +32,10 @@ window/size/viewport_height=720
 movie_writer/mjpeg_quality=1.0
 movie_writer/movie_file="D:/Godot/test.avi"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/zylann.hterrain/plugin.cfg")
+
 [input]
 
 move_right={
@@ -110,3 +114,14 @@ weapon_toggle={
 [rendering]
 
 anti_aliasing/quality/screen_space_aa=1
+
+[shader_globals]
+
+player_trail={
+"type": "sampler2D",
+"value": "res://icon.png"
+}
+player_position={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
