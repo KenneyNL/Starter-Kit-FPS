@@ -22,11 +22,21 @@ This package includes a basic template for a first person shooter in Godot 4.3 (
 | <kbd>Left mouse button</kbd> | Shoot |
 | <kbd>E</kbd> | Switch weapon |
 
+### Instructions
+
+1. How to add more weapons?
+
+Duplicate one of the existing resources in the 'weapons' folder, adjust the properties in the inspector. Select the 'Player' node in the scene and add your new resources to the 'Weapons' array.
+
+2. How to adjust properties like cooldown, damage and spread?
+
+Select the resource of the weapon you'd like to change in the 'weapons' folder, adjust the properties in the inspector.
+
 ### License
 
 MIT License
 
-Copyright (c) 2024 Kenney
+Copyright (c) 2025 Kenney
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

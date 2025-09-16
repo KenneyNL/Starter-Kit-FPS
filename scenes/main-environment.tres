@@ -1,18 +1,13 @@
-[gd_resource type="Environment" load_steps=5 format=3 uid="uid://jvmpkdwaeaq"]
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://jvmpkdwaeaq"]
 
-[sub_resource type="Gradient" id="Gradient_tio4a"]
-colors = PackedColorArray(0.591319, 0.47222, 0.770854, 1, 0.315871, 0.421528, 0.674528, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_4e6px"]
-gradient = SubResource("Gradient_tio4a")
-fill_to = Vector2(0, 1)
+[ext_resource type="Texture2D" uid="uid://cb7sdk1i5rx04" path="res://sprites/skybox.png" id="1_u3n42"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_fjheq"]
-panorama = SubResource("GradientTexture2D_4e6px")
+panorama = ExtResource("1_u3n42")
+energy_multiplier = 0.5
 
 [sub_resource type="Sky" id="Sky_7bk1c"]
 sky_material = SubResource("PanoramaSkyMaterial_fjheq")
-radiance_size = 0
 
 [resource]
 background_mode = 2
@@ -20,7 +15,6 @@ background_color = Color(0.360784, 0.392157, 0.462745, 1)
 sky = SubResource("Sky_7bk1c")
 ambient_light_source = 2
 ambient_light_color = Color(0.662745, 0.694118, 0.772549, 1)
-ambient_light_energy = 1.15
 tonemap_mode = 2
 ssao_enabled = true
 ssao_radius = 0.45
@@ -29,5 +23,7 @@ ssao_power = 5.0
 glow_enabled = true
 glow_levels/2 = 0.6
 glow_levels/3 = 0.6
-glow_levels/5 = 0.0
+glow_levels/5 = 6.0
 glow_intensity = 2.0
+glow_strength = 0.45
+glow_bloom = 0.5

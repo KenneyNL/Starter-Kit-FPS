@@ -52,7 +52,7 @@ func _ready():
 	weapon = weapons[weapon_index] # Weapon must never be nil
 	initiate_change_weapon(weapon_index)
 
-func _physics_process(delta):
+func _process(delta):
 	
 	# Handle functions
 	
