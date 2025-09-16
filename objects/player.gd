@@ -60,7 +60,7 @@ func _physics_process(delta):
 	handle_gravity(delta)
 	
 	# Movement
-
+	
 	var applied_velocity: Vector3
 	
 	movement_velocity = transform.basis * movement_velocity # Move forward
@@ -71,13 +71,7 @@ func _physics_process(delta):
 	velocity = applied_velocity
 	move_and_slide()
 	
-	# Rotation
-	
-	camera.rotation.z = lerp_angle(camera.rotation.z, -input_mouse.x * 25 * delta, delta * 5)	
-	
-	camera.rotation.x = lerp_angle(camera.rotation.x, rotation_target.x, delta * 25)
-	rotation.y = lerp_angle(rotation.y, rotation_target.y, delta * 25)
-	
+	# Rotation 
 	container.position = lerp(container.position, container_offset - (basis.inverse() * applied_velocity / 30), delta * 10)
 	
 	# Movement sound
@@ -107,13 +101,10 @@ func _physics_process(delta):
 
 func _input(event):
 	if event is InputEventMouseMotion and mouse_captured:
-		
 		input_mouse = event.relative / mouse_sensitivity
-		
-		rotation_target.y -= event.relative.x / mouse_sensitivity
-		rotation_target.x -= event.relative.y / mouse_sensitivity
+		handle_rotation(event.relative.x, event.relative.y, false)
 
-func handle_controls(_delta):
+func handle_controls(delta):
 	
 	# Mouse capture
 	
@@ -128,17 +119,13 @@ func handle_controls(_delta):
 		input_mouse = Vector2.ZERO
 	
 	# Movement
-	
 	var input := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	
 	movement_velocity = Vector3(input.x, 0, input.y).normalized() * movement_speed
 	
-	# Rotation
-	
+	# Handle Controller Rotation
 	var rotation_input := Input.get_vector("camera_right", "camera_left", "camera_down", "camera_up")
-	
-	rotation_target -= Vector3(-rotation_input.y, -rotation_input.x, 0).limit_length(1.0) * gamepad_sensitivity
-	rotation_target.x = clamp(rotation_target.x, deg_to_rad(-90), deg_to_rad(90))
+	if rotation_input:
+		handle_rotation(rotation_input.x, rotation_input.y, true, delta)
 	
 	# Shooting
 	
@@ -155,10 +142,23 @@ func handle_controls(_delta):
 	
 	action_weapon_toggle()
 
+# Camera rotation
+
+func handle_rotation(xRot: float, yRot: float, isController: bool, delta: float = 0.0):
+	if isController:
+		rotation_target -= Vector3(-yRot, -xRot, 0).limit_length(1.0) * gamepad_sensitivity
+		rotation_target.x = clamp(rotation_target.x, deg_to_rad(-90), deg_to_rad(90))
+		camera.rotation.x = lerp_angle(camera.rotation.x, rotation_target.x, delta * 25)
+		rotation.y = lerp_angle(rotation.y, rotation_target.y, delta * 25)
+	else:
+		rotation_target += (Vector3(-yRot, -xRot, 0) / mouse_sensitivity)
+		rotation_target.x = clamp(rotation_target.x, deg_to_rad(-90), deg_to_rad(90))
+		camera.rotation.x = rotation_target.x;
+		rotation.y = rotation_target.y;
+	
 # Handle gravity
 
 func handle_gravity(delta):
-	
 	gravity += 20 * delta
 	
 	if gravity > 0 and is_on_floor():
