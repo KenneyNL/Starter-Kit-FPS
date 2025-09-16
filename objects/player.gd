@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @export_subgroup("Properties")
 @export var movement_speed = 5
+@export_range(0, 100) var number_of_jumps:int = 2
 @export var jump_strength = 8
 
 @export_subgroup("Weapons")
@@ -25,8 +26,7 @@ var gravity := 0.0
 
 var previously_floored := false
 
-var jump_single := true
-var jump_double := true
+var jumps_remaining:int
 
 var container_offset = Vector3(1.2, -1.1, -2.75)
 
@@ -148,15 +148,8 @@ func handle_controls(_delta):
 	
 	if Input.is_action_just_pressed("jump"):
 		
-		if jump_single or jump_double:
-			Audio.play("sounds/jump_a.ogg, sounds/jump_b.ogg, sounds/jump_c.ogg")
-		
-		if jump_double:
-			
-			gravity = -jump_strength
-			jump_double = false
-			
-		if(jump_single): action_jump()
+		if jumps_remaining:
+			action_jump()
 		
 	# Weapon switching
 	
@@ -170,17 +163,15 @@ func handle_gravity(delta):
 	
 	if gravity > 0 and is_on_floor():
 		
-		jump_single = true
+		jumps_remaining = number_of_jumps
 		gravity = 0
 
 # Jumping
 
-func action_jump():
-	
-	gravity = -jump_strength
-	
-	jump_single = false;
-	jump_double = true;
+func action_jump():	
+	Audio.play("sounds/jump_a.ogg, sounds/jump_b.ogg, sounds/jump_c.ogg")
+	gravity = -jump_strength	
+	jumps_remaining -= 1
 
 # Shooting
 
