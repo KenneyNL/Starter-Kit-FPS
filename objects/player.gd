@@ -1,9 +1,9 @@
 extends CharacterBody3D
 
 @export_subgroup("Properties")
-@export var movement_speed = 5
+@export var movement_speed := 5
 @export_range(0, 100) var number_of_jumps: int = 2
-@export var jump_strength = 8
+@export var jump_strength := 8
 
 @export_subgroup("Weapons")
 @export var weapons: Array[Weapon] = []
@@ -11,7 +11,7 @@ extends CharacterBody3D
 var weapon: Weapon
 var weapon_index := 0
 
-var mouse_sensitivity = 700
+var mouse_sensitivity := 700
 var gamepad_sensitivity := 0.075
 
 var mouse_captured := true
@@ -28,30 +28,30 @@ var previously_floored := false
 
 var jumps_remaining: int
 
-var container_offset = Vector3(1.2, -1.1, -2.75)
+var container_offset := Vector3(1.2, -1.1, -2.75)
 
 var tween: Tween
 
 signal health_updated
 
-@onready var camera = $Head/Camera
-@onready var raycast = $Head/Camera/RayCast
-@onready var muzzle = $Head/Camera/SubViewportContainer/SubViewport/CameraItem/Muzzle
-@onready var container = $Head/Camera/SubViewportContainer/SubViewport/CameraItem/Container
-@onready var sound_footsteps = $SoundFootsteps
-@onready var blaster_cooldown = $Cooldown
+@onready var camera:			Camera3D 			= $Head/Camera
+@onready var raycast:			RayCast3D 			= $Head/Camera/RayCast
+@onready var muzzle:			AnimatedSprite3D 	= $Head/Camera/SubViewportContainer/SubViewport/CameraItem/Muzzle
+@onready var container:			Node3D				= $Head/Camera/SubViewportContainer/SubViewport/CameraItem/Container
+@onready var sound_footsteps:	AudioStreamPlayer	= $SoundFootsteps
+@onready var blaster_cooldown:	Timer				= $Cooldown
 
 @export var crosshair: TextureRect
 
 # Functions
 
-func _ready():
+func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	weapon = weapons[weapon_index] # Weapon must never be nil
 	initiate_change_weapon(weapon_index)
 
-func _process(delta):
+func _process(delta:float) -> void:
 	# Handle functions
 	handle_controls(delta)
 	handle_gravity(delta)
@@ -96,12 +96,14 @@ func _process(delta):
 
 # Mouse movement
 
-func _input(event):
+func _input(event:InputEvent) -> void:
 	if event is InputEventMouseMotion and mouse_captured:
-		input_mouse = event.relative / mouse_sensitivity
-		handle_rotation(event.relative.x, event.relative.y, false)
+		var mouse_motion := event as InputEventMouseMotion
 
-func handle_controls(delta):
+		input_mouse = mouse_motion.relative / mouse_sensitivity
+		handle_rotation(mouse_motion.relative.x, mouse_motion.relative.y, false)
+
+func handle_controls(delta:float) -> void:
 	# Mouse capture
 	if Input.is_action_just_pressed("mouse_capture"):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -138,7 +140,7 @@ func handle_controls(delta):
 
 # Camera rotation
 
-func handle_rotation(xRot: float, yRot: float, isController: bool, delta: float = 0.0):
+func handle_rotation(xRot: float, yRot: float, isController: bool, delta: float = 0.0) -> void:
 	if isController:
 		rotation_target -= Vector3(-yRot, -xRot, 0).limit_length(1.0) * gamepad_sensitivity
 		rotation_target.x = clamp(rotation_target.x, deg_to_rad(-90), deg_to_rad(90))
@@ -152,7 +154,7 @@ func handle_rotation(xRot: float, yRot: float, isController: bool, delta: float 
 	
 # Handle gravity
 
-func handle_gravity(delta):
+func handle_gravity(delta:float) -> void:
 	gravity += 20 * delta
 	
 	if gravity > 0 and is_on_floor():
@@ -161,14 +163,14 @@ func handle_gravity(delta):
 
 # Jumping
 
-func action_jump():
+func action_jump() -> void:
 	Audio.play("sounds/jump_a.ogg, sounds/jump_b.ogg, sounds/jump_c.ogg")
 	gravity = - jump_strength
 	jumps_remaining -= 1
 
 # Shooting
 
-func action_shoot():
+func action_shoot() -> void:
 	if Input.is_action_pressed("shoot"):
 		if !blaster_cooldown.is_stopped(): return # Cooldown for shooting
 		
@@ -194,17 +196,22 @@ func action_shoot():
 			
 			if !raycast.is_colliding(): continue # Don't create impact when raycast didn't hit
 			
-			var collider = raycast.get_collider()
+			var collider := raycast.get_collider()
 			
 			# Hitting an enemy
 			
 			if collider.has_method("damage"):
-				collider.damage(weapon.damage)
+				# This is another edge case where static typing works oddly in Godot.
+				# We don't have Interfaces and because the "Player" Type is not actually
+				# in scope, we can't simply check: `collider is Player`.
+				# As a work around, we can see if the collider object has the "damage"
+				# method, and if it does we can call it indirectly.
+				collider.call("damage", weapon.damage)
 			
 			# Creating an impact animation
 			
-			var impact = preload("res://objects/impact.tscn")
-			var impact_instance = impact.instantiate()
+			var impact:PackedScene = preload("res://objects/impact.tscn")
+			var impact_instance:AnimatedSprite3D = impact.instantiate()
 			
 			impact_instance.play("shot")
 			
@@ -213,7 +220,7 @@ func action_shoot():
 			impact_instance.position = raycast.get_collision_point() + (raycast.get_collision_normal() / 10)
 			impact_instance.look_at(camera.global_transform.origin, Vector3.UP, true)
 			
-		var knockback = random_vec2(weapon.min_knockback, weapon.max_knockback)
+		var knockback:Vector2 = random_vec2(weapon.min_knockback, weapon.max_knockback)
 		# print('knockback', knockback)
 		container.position.z += 0.25 # Knockback of weapon visual
 		camera.rotation.x += knockback.x # Knockback of camera
@@ -224,7 +231,7 @@ func action_shoot():
 
 # Toggle between available weapons (listed in 'weapons')
 
-func action_weapon_toggle():
+func action_weapon_toggle() -> void:
 	if Input.is_action_just_pressed("weapon_toggle"):
 		weapon_index = wrap(weapon_index + 1, 0, weapons.size())
 		initiate_change_weapon(weapon_index)
@@ -233,7 +240,7 @@ func action_weapon_toggle():
 
 # Initiates the weapon changing animation (tween)
 
-func initiate_change_weapon(index):
+func initiate_change_weapon(index:int) -> void:
 	weapon_index = index
 	
 	tween = get_tree().create_tween()
@@ -243,7 +250,7 @@ func initiate_change_weapon(index):
 
 # Switches the weapon model (off-screen)
 
-func change_weapon():
+func change_weapon() -> void:
 	weapon = weapons[weapon_index]
 
 	# Step 1. Remove previous weapon model(s) from container
@@ -253,7 +260,7 @@ func change_weapon():
 	
 	# Step 2. Place new weapon model in container
 	
-	var weapon_model = weapon.model.instantiate()
+	var weapon_model:Node3D = weapon.model.instantiate()
 	container.add_child(weapon_model)
 	
 	weapon_model.position = weapon.position
@@ -261,7 +268,7 @@ func change_weapon():
 	
 	# Step 3. Set model to only render on layer 2 (the weapon camera)
 	
-	for child in weapon_model.find_children("*", "MeshInstance3D"):
+	for child:MeshInstance3D in weapon_model.find_children("*", "MeshInstance3D"):
 		child.layers = 2
 		
 	# Set weapon data
@@ -269,7 +276,7 @@ func change_weapon():
 	raycast.target_position = Vector3(0, 0, -1) * weapon.max_distance
 	crosshair.texture = weapon.crosshair
 
-func damage(amount):
+func damage(amount:int) -> void:
 	health -= amount
 	health_updated.emit(health) # Update health on HUD
 	
@@ -278,5 +285,5 @@ func damage(amount):
 
 # Create a random knockback vector
 static func random_vec2(_min: Vector2, _max: Vector2) -> Vector2:
-	var _sign = -1 if randi() % 2 == 0 else 1
+	var _sign := -1 if randi() % 2 == 0 else 1
 	return Vector2(randf_range(_min.x, _max.x), randf_range(_min.y, _max.y) * _sign)
